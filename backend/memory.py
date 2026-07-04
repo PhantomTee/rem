@@ -69,9 +69,27 @@ async def give_feedback(
 
 async def sleep(session_ids: list[str] | None = None) -> dict:
     """REM's sleep cycle: memify — prune stale nodes, strengthen frequent
-    connections, and bridge session memory into the permanent graph."""
+    connections, and bridge session memory into the permanent graph. If
+    Cognee Cloud is configured, the consolidated brain is then archived
+    there — dreams are processed locally, lasting memories are backed up."""
+    import os
+
     result = await cognee.improve(DATASET, session_ids=session_ids)
-    return {"status": "slept", "detail": str(result)[:2000]}
+    archived = False
+    if os.getenv("COGNEE_SERVICE_URL") and os.getenv("COGNEE_API_KEY"):
+        try:
+            # re-derive: upload raw content and let Cloud's own cognify
+            # pipeline rebuild the graph remotely (preserve-mode COGX import
+            # 409s against the current Cloud version)
+            push_result = await cognee.push(
+                DATASET, mode="re-derive", run_in_background=True
+            )
+            archived = True
+            logger_detail = str(push_result)[:500]
+        except Exception as e:  # archive is best-effort; sleep still succeeded
+            logger_detail = f"cloud archive failed: {e}"
+        print(f"[sleep] cloud archive: {logger_detail}")
+    return {"status": "slept", "archived": archived, "detail": str(result)[:2000]}
 
 
 async def forget_everything() -> dict:

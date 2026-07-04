@@ -19,6 +19,11 @@ Human memory doesn't just store — it consolidates during sleep, strengthens wi
 | **Sleep** | `improve()` (memify) — prunes stale nodes, strengthens frequent connections, bridges session memory into the permanent graph | the brain dims, breathes, and wakes reorganized |
 | **Feedback** | `FeedbackEntry` chained to a `QAEntry` id — feedback literally becomes memory | rate a reply +1/−1; future recall re-weights around it |
 | **Forget** | `forget()` — surgical deletion at item/dataset/everything scope | nodes vanish; the right to be forgotten, animated |
+| **Archive** | `push()` — after sleep, the consolidated brain is pushed to **Cognee Cloud** | "archived to Cognee Cloud" on waking |
+
+## Local dreams, cloud memories
+
+REM runs its whole memory lifecycle self-hosted — but sleep has one more biological step: what consolidation keeps, gets archived. With two env vars (`COGNEE_SERVICE_URL`, `COGNEE_API_KEY`), every sleep cycle ends by pushing the consolidated dataset to Cognee Cloud with `cognee.push()`. Dreams are processed locally; lasting memories are backed up off-device. Lose the laptop, keep the brain.
 
 ## Architecture
 

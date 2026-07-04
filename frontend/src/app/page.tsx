@@ -70,7 +70,7 @@ export default function Home() {
     ];
     const timers = descent.map(([s, ms]) => setTimeout(() => setStage(s), ms));
     try {
-      await api.sleep([sessionId]);
+      const slept = await api.sleep([sessionId]);
       const after = await api.graph();
       setGraph(after);
       const delta = after.nodes.length - before;
@@ -80,7 +80,8 @@ export default function Home() {
             ? " — memory reviewed, nothing to consolidate"
             : delta > 0
               ? " — this session's memories joined the permanent graph"
-              : " — stale memories pruned")
+              : " — stale memories pruned") +
+          (slept.archived ? " · archived to Cognee Cloud" : "")
       );
     } catch {
       flash("Sleep failed — is the backend awake?");

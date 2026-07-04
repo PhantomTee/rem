@@ -9,7 +9,11 @@ export type ChatResponse = {
   qa_id: string | null;
   context_used: string[];
 };
-export type SleepResponse = { status: string; detail: string };
+export type SleepResponse = {
+  status: string;
+  archived: boolean;
+  detail: string;
+};
 
 async function req<T>(path: string, init?: RequestInit): Promise<T> {
   const res = await fetch(`${BASE}${path}`, {
