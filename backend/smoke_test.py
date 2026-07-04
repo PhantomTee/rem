@@ -55,7 +55,8 @@ async def main() -> int:
     if qa_id:
         print("== feedback: chain to QA ==")
         await cognee.remember(
-            cognee.FeedbackEntry(qa_id=qa_id, feedback_score=1, feedback_text="Correct.")
+            cognee.FeedbackEntry(qa_id=qa_id, feedback_score=1, feedback_text="Correct."),
+            session_id="smoke_session",
         )
         print("  feedback stored")
 

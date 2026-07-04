@@ -77,6 +77,7 @@ class FeedbackIn(BaseModel):
     qa_id: str
     score: int  # +1 / -1
     text: str | None = None
+    session_id: str = "default"
 
 
 @app.post("/chat")
@@ -123,7 +124,7 @@ async def forget(body: ForgetIn):
 async def feedback(body: FeedbackIn):
     if not body.qa_id:
         raise HTTPException(400, "qa_id required")
-    await memory.give_feedback(body.qa_id, body.score, body.text)
+    await memory.give_feedback(body.qa_id, body.score, body.text, body.session_id)
 
 
 @app.get("/graph")

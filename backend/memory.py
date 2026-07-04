@@ -58,9 +58,12 @@ async def recall_context(query: str, session_id: str | None = None) -> list[str]
     return [_entry_text(r) for r in results or []]
 
 
-async def give_feedback(qa_id: str, score: int, text: str | None = None) -> None:
+async def give_feedback(
+    qa_id: str, score: int, text: str | None = None, session_id: str = "default"
+) -> None:
     await cognee.remember(
-        cognee.FeedbackEntry(qa_id=qa_id, feedback_score=score, feedback_text=text)
+        cognee.FeedbackEntry(qa_id=qa_id, feedback_score=score, feedback_text=text),
+        session_id=session_id,
     )
 
 

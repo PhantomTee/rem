@@ -33,10 +33,10 @@ export const api = {
   sleep: () => req<SleepResponse>("/sleep", { method: "POST" }),
   forget: (opts: { dataset?: string; everything?: boolean }) =>
     req<void>("/forget", { method: "POST", body: JSON.stringify(opts) }),
-  feedback: (qa_id: string, score: 1 | -1, text?: string) =>
+  feedback: (qa_id: string, score: 1 | -1, session_id: string, text?: string) =>
     req<void>("/feedback", {
       method: "POST",
-      body: JSON.stringify({ qa_id, score, text }),
+      body: JSON.stringify({ qa_id, score, session_id, text }),
     }),
   graph: () => req<GraphData>("/graph"),
 };

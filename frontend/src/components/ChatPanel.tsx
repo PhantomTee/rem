@@ -60,7 +60,7 @@ export default function ChatPanel({ sessionId, onMemoryChanged }: Props) {
       m.map((x, i) => (i === index ? { ...x, feedback: score } : x))
     );
     try {
-      await api.feedback(msg.qaId, score);
+      await api.feedback(msg.qaId, score, sessionId);
       onMemoryChanged();
     } catch {
       setMessages((m) =>
