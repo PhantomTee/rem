@@ -24,10 +24,10 @@ export function colorFor(type: string): string {
   const t = type.toLowerCase();
   if (t.includes("session") || t.includes("interaction") || t.includes("conversation"))
     return NODE_COLORS.session;
-  if (t.includes("chunk") || t.includes("document") || t.includes("text"))
-    return NODE_COLORS.document;
   if (t.includes("type") || t.includes("summary") || t.includes("concept"))
     return NODE_COLORS.concept;
+  if (t.includes("chunk") || t.includes("document") || t.includes("text"))
+    return NODE_COLORS.document;
   return NODE_COLORS.entity;
 }
 

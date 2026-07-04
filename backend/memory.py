@@ -84,11 +84,26 @@ async def forget_dataset(dataset: str) -> dict:
 
 async def export_graph() -> dict:
     """Return {nodes, links} for the frontend force-graph, straight from
-    cognee's graph engine (NetworkX/Kuzu locally)."""
-    from cognee.infrastructure.databases.graph import get_graph_engine
+    cognee's graph engine (NetworkX/Kuzu locally).
 
-    engine = await get_graph_engine()
-    nodes_raw, edges_raw = await engine.get_graph_data()
+    Multi-tenant mode keys each user+dataset to its own graph database, so
+    resolve the default user's dataset and set the database context first —
+    the same dance cognee.visualize_graph does."""
+    from cognee.context_global_variables import set_database_global_context_variables
+    from cognee.infrastructure.databases.graph import get_graph_engine
+    from cognee.modules.data.methods import get_authorized_existing_datasets
+    from cognee.modules.users.methods import get_default_user
+
+    user = await get_default_user()
+    datasets = await get_authorized_existing_datasets([DATASET], "read", user)
+    if not datasets:
+        return {"nodes": [], "links": []}
+
+    async with set_database_global_context_variables(
+        datasets[0].id, datasets[0].owner_id
+    ):
+        engine = await get_graph_engine()
+        nodes_raw, edges_raw = await engine.get_graph_data()
 
     nodes = []
     for node_id, props in nodes_raw:
