@@ -52,13 +52,18 @@ export default function Home() {
     const before = graph.nodes.length;
     setSleeping(true);
     try {
-      await api.sleep();
+      // bridge this session's chat memories into the permanent graph
+      await api.sleep([sessionId]);
       const after = await api.graph();
       setGraph(after);
       const delta = after.nodes.length - before;
       flash(
-        `REM slept on it — memory consolidated. ${before} → ${after.nodes.length} nodes` +
-          (delta === 0 ? "" : delta > 0 ? " (new connections inferred)" : " (stale memories pruned)")
+        `REM slept on it. ${before} → ${after.nodes.length} nodes` +
+          (delta === 0
+            ? " — memory reviewed, nothing to consolidate"
+            : delta > 0
+              ? " — this session's memories joined the permanent graph"
+              : " — stale memories pruned")
       );
     } catch {
       flash("Sleep failed — is the backend awake?");

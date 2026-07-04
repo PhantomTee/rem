@@ -30,7 +30,11 @@ export const api = {
     }),
   remember: (text: string) =>
     req<void>("/remember", { method: "POST", body: JSON.stringify({ text }) }),
-  sleep: () => req<SleepResponse>("/sleep", { method: "POST" }),
+  sleep: (session_ids?: string[]) =>
+    req<SleepResponse>("/sleep", {
+      method: "POST",
+      body: JSON.stringify({ session_ids }),
+    }),
   forget: (opts: { dataset?: string; everything?: boolean }) =>
     req<void>("/forget", { method: "POST", body: JSON.stringify(opts) }),
   feedback: (qa_id: string, score: 1 | -1, session_id: string, text?: string) =>

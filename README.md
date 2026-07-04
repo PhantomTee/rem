@@ -4,6 +4,10 @@ Every AI chat demo shows *remembering*. REM shows the whole memory lifecycle —
 
 REM is a memory-first AI companion with a visible brain: a live force-directed knowledge graph that grows as you talk to it. Built for the WeMakeDevs × [Cognee](https://github.com/topoteretes/cognee) hackathon **"The Hangover Part AI"**, entirely on the open-source, self-hosted cognee stack (SQLite + LanceDB + NetworkX — no Docker, no external databases).
 
+## Why it matters
+
+Agent memory has a trust problem: it's invisible. You can't see what your assistant knows about you, you can't correct what it got wrong, and you can't make it forget. REM is a working answer to all three — every memory is a node you can inspect, feedback rewires retrieval around the answers you rate, and forgetting is surgical and permanent. That's not a chatbot feature; it's what agent memory has to look like before anyone should trust it. Chat is just the simplest surface to prove the pattern on — the same memory-first UI works for support bots, tutors, and research copilots.
+
 ## Why it's different
 
 Human memory doesn't just store — it consolidates during sleep, strengthens with feedback, and lets go of what no longer matters. REM maps cognee's full memory lifecycle onto that biology, and makes every step *visible*:

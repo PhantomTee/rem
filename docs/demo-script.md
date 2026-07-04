@@ -16,11 +16,16 @@ This is REM, and its brain is on the right. Watch."
   exact answer. REM re-weights future recall around it."
 
 ## Act 2 — sleep (1:10–1:50)
+- Point out: the conversation you just had is NOT in the graph yet —
+  it lives in session memory, like a day's experiences before bed.
 - Click **Sleep**. Graph dims and breathes.
-- Line: "Human brains consolidate memory during sleep. So does REM —
-  cognee's memify pipeline prunes stale nodes and strengthens the
-  connections that keep firing."
-- Toast shows node delta. Ask the same question again — still grounded.
+- Line: "Human brains consolidate the day's memories during sleep. So
+  does REM — cognee bridges this session into the permanent graph and
+  memify strengthens the connections that keep firing."
+- The graph visibly BLOOMS (in testing: 60 → 65 nodes, 105 → 136 links).
+  Toast says "this session's memories joined the permanent graph."
+- Bonus cut: kill the backend, restart it, ask the same question —
+  still remembers. "Not a context window. A memory."
 
 ## Act 3 — forget (1:50–2:20)
 - Click **Forget** → confirm. Nodes vanish.
