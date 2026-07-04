@@ -53,9 +53,50 @@ body {
   animation: breathe 4.8s ease-in-out infinite;
 }
 
+/* EEG trace drift — the doubled waveform scrolls one period, seamlessly */
+@keyframes eeg-drift {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-180px);
+  }
+}
+
+.eeg-trace {
+  animation: eeg-drift 7s linear infinite;
+}
+
+.eeg-trace.deep {
+  animation-duration: 12s;
+}
+
+.eeg-trace.rapid {
+  animation-duration: 3.5s;
+}
+
+/* recalling indicator — a slow thought */
+@keyframes thinking {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.thinking {
+  animation: thinking 2.2s ease-in-out infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .sleeping-veil {
+  .sleeping-veil,
+  .eeg-trace,
+  .thinking {
     animation: none;
+  }
+  .sleeping-veil {
     opacity: 0.4;
   }
 }

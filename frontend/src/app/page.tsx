@@ -3,20 +3,31 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import BrainGraph from "@/components/BrainGraph";
 import ChatPanel from "@/components/ChatPanel";
+import Hypnogram, { type Stage } from "@/components/Hypnogram";
 import { api, type GraphData } from "@/lib/api";
 
 const EMPTY: GraphData = { nodes: [], links: [] };
+
+const SLEEP_CAPTION: Record<Exclude<Stage, "wake">, string> = {
+  n1: "drifting off…",
+  n2: "sleep spindles firing…",
+  n3: "slow-wave sleep — reviewing the day…",
+  rem: "dreaming — consolidating memories into the graph…",
+};
+
+const LADDER: Stage[] = ["wake", "n1", "n2", "n3", "rem"];
 
 export default function Home() {
   const [graph, setGraph] = useState<GraphData>(EMPTY);
   const [sessionId] = useState(
     () => `session_${new Date().toISOString().slice(0, 10)}`
   );
-  const [sleeping, setSleeping] = useState(false);
+  const [stage, setStage] = useState<Stage>("wake");
   const [notice, setNotice] = useState<string | null>(null);
   const [confirmingForget, setConfirmingForget] = useState(false);
   const graphBox = useRef<HTMLDivElement>(null);
   const [box, setBox] = useState({ w: 600, h: 600 });
+  const sleeping = stage !== "wake";
 
   const refreshGraph = useCallback(async () => {
     try {
@@ -50,15 +61,21 @@ export default function Home() {
   async function sleep() {
     if (sleeping) return;
     const before = graph.nodes.length;
-    setSleeping(true);
+    // descend the hypnogram while cognee consolidates; hold in REM until done
+    const descent: [Stage, number][] = [
+      ["n1", 0],
+      ["n2", 3000],
+      ["n3", 7000],
+      ["rem", 13000],
+    ];
+    const timers = descent.map(([s, ms]) => setTimeout(() => setStage(s), ms));
     try {
-      // bridge this session's chat memories into the permanent graph
       await api.sleep([sessionId]);
       const after = await api.graph();
       setGraph(after);
       const delta = after.nodes.length - before;
       flash(
-        `REM slept on it. ${before} → ${after.nodes.length} nodes` +
+        `REM woke up. ${before} → ${after.nodes.length} nodes` +
           (delta === 0
             ? " — memory reviewed, nothing to consolidate"
             : delta > 0
@@ -68,7 +85,8 @@ export default function Home() {
     } catch {
       flash("Sleep failed — is the backend awake?");
     } finally {
-      setSleeping(false);
+      timers.forEach(clearTimeout);
+      setStage("wake");
     }
   }
 
@@ -85,12 +103,15 @@ export default function Home() {
 
   return (
     <main className="flex h-screen flex-col overflow-hidden">
-      <header className="flex items-center justify-between border-b border-panel-edge px-5 py-3">
+      <header className="flex items-center justify-between gap-4 border-b border-panel-edge px-5 py-3">
         <div className="flex items-baseline gap-3">
           <h1 className="font-display text-2xl italic text-ink">REM</h1>
           <p className="hidden text-xs text-ink-dim sm:block">
             the AI that sleeps on it
           </p>
+        </div>
+        <div className="hidden lg:block">
+          <Hypnogram stage={stage} />
         </div>
         <div className="flex items-center gap-5">
           <dl className="hidden gap-4 font-mono text-[11px] text-ink-dim md:flex">
@@ -140,10 +161,26 @@ export default function Home() {
             height={box.h}
           />
           {sleeping && (
-            <div className="pointer-events-none absolute inset-x-0 top-6 text-center">
-              <p className="font-display text-lg italic text-ink-dim">
-                consolidating memories…
+            <div className="pointer-events-none absolute inset-x-0 top-8 flex flex-col items-center gap-3 text-center">
+              <p className="font-display text-lg italic text-glow">
+                {SLEEP_CAPTION[stage]}
               </p>
+              <ol className="flex gap-3 font-mono text-[11px] tracking-widest">
+                {LADDER.map((s) => (
+                  <li
+                    key={s}
+                    className={
+                      s === stage
+                        ? "text-glow"
+                        : LADDER.indexOf(s) < LADDER.indexOf(stage)
+                          ? "text-ink-dim"
+                          : "text-ink-faint"
+                    }
+                  >
+                    {s.toUpperCase()}
+                  </li>
+                ))}
+              </ol>
             </div>
           )}
         </section>

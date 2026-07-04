@@ -6,10 +6,14 @@ import { api } from "@/lib/api";
 type Message = {
   role: "user" | "rem";
   text: string;
+  at: string;
   qaId?: string | null;
   recalled?: number;
   feedback?: 1 | -1;
 };
+
+const now = () =>
+  new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 
 type Props = {
   sessionId: string;
@@ -32,7 +36,7 @@ export default function ChatPanel({ sessionId, onMemoryChanged }: Props) {
     if (!text || busy) return;
     setInput("");
     setError(null);
-    setMessages((m) => [...m, { role: "user", text }]);
+    setMessages((m) => [...m, { role: "user", text, at: now() }]);
     setBusy(true);
     try {
       const res = await api.chat(text, sessionId);
@@ -41,6 +45,7 @@ export default function ChatPanel({ sessionId, onMemoryChanged }: Props) {
         {
           role: "rem",
           text: res.reply,
+          at: now(),
           qaId: res.qa_id,
           recalled: res.context_used.length,
         },
@@ -93,8 +98,14 @@ export default function ChatPanel({ sessionId, onMemoryChanged }: Props) {
             >
               {m.text}
             </div>
+            {m.role === "user" && (
+              <div className="mt-1 font-mono text-[10px] text-ink-faint">
+                {m.at}
+              </div>
+            )}
             {m.role === "rem" && (
               <div className="mt-1 flex items-center gap-3 font-mono text-[11px] text-ink-faint">
+                <span className="text-[10px]">{m.at}</span>
                 {m.recalled !== undefined && (
                   <span>
                     {m.recalled === 0
@@ -130,8 +141,8 @@ export default function ChatPanel({ sessionId, onMemoryChanged }: Props) {
           </div>
         ))}
         {busy && (
-          <p className="font-mono text-[11px] text-ink-faint">
-            REM is recalling…
+          <p className="thinking font-display text-sm italic text-ink-dim">
+            remembering…
           </p>
         )}
         {error && <p className="text-xs text-[#c9627e]">{error}</p>}

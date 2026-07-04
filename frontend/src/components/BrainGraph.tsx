@@ -65,6 +65,24 @@ export default function BrainGraph({ data, sleeping, width, height }: Props) {
             "radial-gradient(ellipse 60% 50% at 50% 45%, #2a2452 0%, transparent 70%)",
         }}
       />
+      {/* faint oscilloscope rings — instrument framing for the brain */}
+      <svg
+        aria-hidden
+        className="pointer-events-none absolute inset-0 h-full w-full"
+        preserveAspectRatio="xMidYMid meet"
+      >
+        {[140, 280, 420].map((r) => (
+          <circle
+            key={r}
+            cx="50%"
+            cy="47%"
+            r={r}
+            fill="none"
+            stroke="#1a1731"
+            strokeWidth="1"
+          />
+        ))}
+      </svg>
       <ForceGraph2D
         width={width}
         height={height}
