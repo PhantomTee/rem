@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+/* REM — hypnagogic palette. Categorical node colors validated (dataviz six checks)
+   against surface #0B0A14: violet #8B7EC8 · teal #1F9C93 · amber #C77E33 · rose #C9627E */
+:root {
+  --bg: #0b0a14;
+  --surface: #14122200;
+  --panel: #131126;
+  --panel-edge: #262147;
+  --ink: #e9e5f2;
+  --ink-dim: #9a93b0;
+  --ink-faint: #5d5675;
+  --glow: #e8a15c;
+  --node-entity: #8b7ec8;
+  --node-concept: #1f9c93;
+  --node-document: #c77e33;
+  --node-session: #c9627e;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-panel: var(--panel);
+  --color-panel-edge: var(--panel-edge);
+  --color-ink: var(--ink);
+  --color-ink-dim: var(--ink-dim);
+  --color-ink-faint: var(--ink-faint);
+  --color-glow: var(--glow);
+  --font-display: var(--font-fraunces);
+  --font-sans: var(--font-instrument);
+  --font-mono: var(--font-plex-mono);
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-instrument), system-ui, sans-serif;
+}
+
+/* The brain breathes — slow ambient pulse behind the graph while REM sleeps */
+@keyframes breathe {
+  0%,
+  100% {
+    opacity: 0.25;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.55;
+    transform: scale(1.06);
+  }
+}
+
+.sleeping-veil {
+  animation: breathe 4.8s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sleeping-veil {
+    animation: none;
+    opacity: 0.4;
+  }
+}
+
+::selection {
+  background: #8b7ec855;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--glow);
+  outline-offset: 2px;
+}

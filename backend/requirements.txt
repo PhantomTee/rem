@@ -1,0 +1,5 @@
+cognee>=1.2.2
+fastapi
+uvicorn[standard]
+anthropic
+python-dotenv
