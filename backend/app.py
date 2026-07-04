@@ -16,7 +16,6 @@ from dotenv import load_dotenv
 
 load_dotenv(Path(__file__).resolve().parent.parent / ".env")
 
-import anthropic  # noqa: E402
 from fastapi import FastAPI, HTTPException  # noqa: E402
 from fastapi.middleware.cors import CORSMiddleware  # noqa: E402
 from pydantic import BaseModel  # noqa: E402
@@ -39,14 +38,21 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-_claude: anthropic.AsyncAnthropic | None = None
+_chat_client = None
 
 
-def get_claude() -> anthropic.AsyncAnthropic:
-    global _claude
-    if _claude is None:
-        _claude = anthropic.AsyncAnthropic()  # ANTHROPIC_API_KEY from env
-    return _claude
+def get_chat_client():
+    """OpenAI-compatible chat client — points at Groq, OpenAI, or anything
+    else via CHAT_BASE_URL / CHAT_API_KEY."""
+    global _chat_client
+    if _chat_client is None:
+        from openai import AsyncOpenAI
+
+        _chat_client = AsyncOpenAI(
+            base_url=os.getenv("CHAT_BASE_URL") or None,
+            api_key=os.getenv("CHAT_API_KEY") or os.getenv("LLM_API_KEY"),
+        )
+    return _chat_client
 
 
 class ChatIn(BaseModel):
@@ -76,15 +82,20 @@ class FeedbackIn(BaseModel):
 @app.post("/chat")
 async def chat(body: ChatIn):
     context = await memory.recall_context(body.message, session_id=body.session_id)
-    resp = await get_claude().messages.create(
-        model=os.getenv("CHAT_MODEL", "claude-sonnet-5"),
+    resp = await get_chat_client().chat.completions.create(
+        model=os.getenv("CHAT_MODEL", "llama-3.3-70b-versatile"),
         max_tokens=1024,
-        system=SYSTEM_PROMPT.format(
-            context="\n".join(f"- {c}" for c in context) or "(none yet)"
-        ),
-        messages=[{"role": "user", "content": body.message}],
+        messages=[
+            {
+                "role": "system",
+                "content": SYSTEM_PROMPT.format(
+                    context="\n".join(f"- {c}" for c in context) or "(none yet)"
+                ),
+            },
+            {"role": "user", "content": body.message},
+        ],
     )
-    reply = "".join(b.text for b in resp.content if b.type == "text")
+    reply = resp.choices[0].message.content or ""
     qa_id = await memory.remember_qa(body.message, reply, session_id=body.session_id)
     return {"reply": reply, "qa_id": qa_id, "context_used": context}
 
