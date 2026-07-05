@@ -41,7 +41,7 @@ inspectable and reversible.
 
 **Stack**: Next.js 16 + react-force-graph (frontend, on Vercel), FastAPI
 (backend, on Railway), self-hosted cognee (SQLite + LanceDB + NetworkX) with
-optional Cognee Cloud archival, Groq `llama-3.3-70b-versatile` for
+optional Cognee Cloud archival, `gpt-4o-mini` via OpenRouter for
 extraction/chat, local `fastembed` embeddings.
 
 **Live demo**: [rem.vercel.app](https://rem.vercel.app)
@@ -70,7 +70,7 @@ the health-assistant concept, and final decisions are my own.
 > Woke up my AI and gave it a health memory it can't forget (or can, if you
 > ask it to). Built REM Health for @wemakedevs' Hangover Part AI hackathon —
 > a health companion where you *watch* the memory lifecycle: remember, recall,
-> sleep, feedback, forget, all powered by @cognee_. Self-hosted, $0 LLM spend,
+> sleep, feedback, forget, all powered by @cognee_. Self-hosted, near-zero LLM cost,
 > deployed live: rem.vercel.app 🧠
 > #TheHangoverPartAI #cognee
 
@@ -90,8 +90,8 @@ the health-assistant concept, and final decisions are my own.
 > can't make it forget. That's most dangerous exactly where REM Health points
 > it — health data. This makes the whole lifecycle visible and reversible.
 >
-> Built solo, self-hosted stack (SQLite + LanceDB + NetworkX), $0 LLM spend on
-> Groq's free tier, optional Cognee Cloud archival after every Sleep cycle.
+> Built solo, self-hosted stack (SQLite + LanceDB + NetworkX), pennies-per-call
+> LLM cost, optional Cognee Cloud archival after every Sleep cycle.
 >
 > Live: rem.vercel.app · Code: github.com/PhantomTee/rem
 >

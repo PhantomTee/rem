@@ -37,4 +37,4 @@ its brain is on the right. Watch."
 ## Close (2:20–2:40)
 - README on screen: the 4-op lifecycle table.
 - "Self-hosted cognee: SQLite, LanceDB, NetworkX. No Docker. LLM bill for
-  everything you just watched: zero dollars. Links below."
+  everything you just watched: pennies. Links below."

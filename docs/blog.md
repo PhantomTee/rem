@@ -23,7 +23,7 @@ The self-improving part is my favorite: rate any reply +1/−1 and REM stores a 
 
 **Typed entries need a session.** `remember(FeedbackEntry(...))` without a `session_id` raises `ValueError: session_id is required for typed memory entries`. Makes sense in hindsight — feedback lives in session memory before consolidation — but thread your session id through the whole stack from the start.
 
-**Groq free tier is real money's worth of extraction.** The whole build — entity extraction for every memory, summaries, the improve pipeline — ran on Groq's free `llama-3.3-70b-versatile` with cognee's built-in rate limiter (`LLM_RATE_LIMIT_ENABLED=true`, 25 req/min) and local `fastembed` embeddings. Total LLM spend: **$0**. Day-to-day, the memory layer — relational, vector, and graph stores — is SQLite + LanceDB + NetworkX on disk, no Docker required.
+**Free tiers get you 90% of the way, not 100%.** Development ran almost entirely on free inference — Groq's `llama-3.3-70b-versatile`, then OpenRouter's free models — with cognee's built-in rate limiter (`LLM_RATE_LIMIT_ENABLED=true`) and local `fastembed` embeddings for $0. But free tiers are shared, oversubscribed pools: Groq's daily token cap ran out from testing, and OpenRouter's free models started throwing upstream 429s under load. For the deployed version I switched to `gpt-4o-mini` — still fractions of a cent per call — to keep the demo reliable. The memory layer itself stays free either way: SQLite + LanceDB + NetworkX on disk, no Docker required.
 
 ## Local dreams, cloud memories
 
