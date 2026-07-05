@@ -62,6 +62,10 @@ Verify the full lifecycle end-to-end: `python backend/smoke_test.py`
 2. **Sleep** — hit Sleep: cognee's memify pipeline consolidates; the graph visibly reorganizes.
 3. **Forget** — surgically delete everything. *Last night never happened.*
 
+## AI tool usage
+
+Built with [Claude Code](https://claude.com/claude-code) as a pair-programmer throughout — architecture, backend/frontend implementation, the Render→Railway deployment migration, and debugging (including diagnosing the cognee storage-path and schema-migration issues described above). All product decisions, the health-assistant direction, and final review are my own. Disclosed per the hackathon rules.
+
 ## Team
 
 Built solo by [PhantomTee](https://github.com/PhantomTee).
