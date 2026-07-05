@@ -14,6 +14,10 @@ export type SleepResponse = {
   archived: boolean;
   detail: string;
 };
+export type HealthSummary = {
+  medications: string[];
+  symptoms: string[];
+};
 
 async function req<T>(path: string, init?: RequestInit): Promise<T> {
   const res = await fetch(`${BASE}${path}`, {
@@ -47,4 +51,25 @@ export const api = {
       body: JSON.stringify({ qa_id, score, session_id, text }),
     }),
   graph: () => req<GraphData>("/graph"),
+  logMedication: (
+    name: string,
+    dosage: string | undefined,
+    frequency: string | undefined,
+    session_id: string
+  ) =>
+    req<void>("/health/medication", {
+      method: "POST",
+      body: JSON.stringify({ name, dosage, frequency, session_id }),
+    }),
+  logSymptom: (
+    description: string,
+    severity: number | undefined,
+    session_id: string
+  ) =>
+    req<void>("/health/symptom", {
+      method: "POST",
+      body: JSON.stringify({ description, severity, session_id }),
+    }),
+  healthSummary: (session_id: string) =>
+    req<HealthSummary>(`/health/summary?session_id=${encodeURIComponent(session_id)}`),
 };

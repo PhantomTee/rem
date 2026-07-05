@@ -1,16 +1,16 @@
 # I gave my AI a sleep cycle
 
-*Building REM — an AI whose brain you can watch — in one day on cognee, for the WeMakeDevs "Hangover Part AI" hackathon.*
+*Building REM Health — a health companion whose brain you can watch — in one day on cognee, for the WeMakeDevs "Hangover Part AI" hackathon.*
 
 Every AI chat demo shows *remembering*. Ask people what memory means and they'll say "it doesn't forget what I told it yesterday." But that's maybe a third of what a memory actually does. Human memory consolidates while we sleep — pruning what didn't matter, strengthening what kept coming up. It sharpens when someone corrects us. And crucially, it can let go.
 
-So instead of building another chatbot-that-remembers, I built **REM: the AI that sleeps on it.** Split screen: chat on the left, and on the right a live force-directed knowledge graph — REM's actual brain, rendered straight from cognee's graph store. Every message you send becomes nodes and edges while you watch.
+So instead of building another chatbot-that-remembers, I built **REM Health: the health companion that sleeps on it.** Split screen: a Health Log + chat on the left, and on the right a live force-directed knowledge graph — REM's actual brain, rendered straight from cognee's graph store. Log a medication or a symptom, and it becomes nodes and edges while you watch — the same structure a doctor's mental model of your history would have, except you can actually see it.
 
 ## The lifecycle is the product
 
 [cognee](https://github.com/topoteretes/cognee) exposes memory as four operations, and REM uses every one of them as a first-class UI feature:
 
-- **`remember()`** — chat turns are stored as typed `QAEntry` objects (question + answer), notes as raw text. Cognee chunks, extracts entities, and wires them into a hybrid graph-vector store. This is why the graph on the right fills with `doug`, `bellagio`, `person`, `location` — real extracted structure, not decoration.
+- **`remember()`** — chat turns are stored as typed `QAEntry` objects (question + answer), medications/symptoms/notes as raw text. Cognee chunks, extracts entities, and wires them into a hybrid graph-vector store. This is why the graph on the right fills with `metformin`, `medication`, `symptom`, `person` — real extracted structure, not decoration.
 - **`recall()`** — before every reply, REM queries its memory. Cognee auto-routes between semantic search and graph traversal. The UI shows "recalled 3 memories" under each answer, so you can see the difference between a grounded reply and a guess.
 - **`improve()`** — the Sleep button. Cognee's memify pipeline prunes stale nodes, strengthens frequently-used connections, and bridges session memory into the permanent graph. In REM, the brain dims, breathes for a while, and wakes up reorganized. Memory consolidation, literally animated.
 - **`forget()`** — the finale. Surgical deletion at item, dataset, or everything scope. Watch the nodes vanish. *Last night never happened.*

@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import BrainGraph from "@/components/BrainGraph";
 import ChatPanel from "@/components/ChatPanel";
+import HealthLog from "@/components/HealthLog";
 import Hypnogram, { type Stage } from "@/components/Hypnogram";
 import { api, type GraphData } from "@/lib/api";
 
@@ -25,6 +26,7 @@ export default function Home() {
   const [stage, setStage] = useState<Stage>("wake");
   const [notice, setNotice] = useState<string | null>(null);
   const [confirmingForget, setConfirmingForget] = useState(false);
+  const [tab, setTab] = useState<"chat" | "health">("chat");
   const graphBox = useRef<HTMLDivElement>(null);
   const [box, setBox] = useState({ w: 600, h: 600 });
   const sleeping = stage !== "wake";
@@ -106,9 +108,9 @@ export default function Home() {
     <main className="flex h-screen flex-col overflow-hidden">
       <header className="flex items-center justify-between gap-4 border-b border-panel-edge px-5 py-3">
         <div className="flex items-baseline gap-3">
-          <h1 className="font-display text-2xl italic text-ink">REM</h1>
+          <h1 className="font-display text-2xl italic text-ink">REM Health</h1>
           <p className="hidden text-xs text-ink-dim sm:block">
-            the AI that sleeps on it
+            the health companion that sleeps on it
           </p>
         </div>
         <div className="hidden lg:block">
@@ -145,10 +147,38 @@ export default function Home() {
 
       <div className="flex min-h-0 flex-1 flex-col md:flex-row">
         <section
-          aria-label="Chat with REM"
+          aria-label="REM Health"
           className="flex h-1/2 flex-col border-b border-panel-edge md:h-auto md:w-[420px] md:border-b-0 md:border-r"
         >
-          <ChatPanel sessionId={sessionId} onMemoryChanged={refreshGraph} />
+          <div className="flex border-b border-panel-edge">
+            <button
+              onClick={() => setTab("chat")}
+              className={`flex-1 px-4 py-2.5 text-sm transition-colors ${
+                tab === "chat"
+                  ? "border-b-2 border-glow text-ink"
+                  : "text-ink-dim hover:text-ink"
+              }`}
+            >
+              Chat
+            </button>
+            <button
+              onClick={() => setTab("health")}
+              className={`flex-1 px-4 py-2.5 text-sm transition-colors ${
+                tab === "health"
+                  ? "border-b-2 border-glow text-ink"
+                  : "text-ink-dim hover:text-ink"
+              }`}
+            >
+              Health Log
+            </button>
+          </div>
+          <div className="min-h-0 flex-1">
+            {tab === "chat" ? (
+              <ChatPanel sessionId={sessionId} onMemoryChanged={refreshGraph} />
+            ) : (
+              <HealthLog sessionId={sessionId} />
+            )}
+          </div>
         </section>
         <section
           ref={graphBox}

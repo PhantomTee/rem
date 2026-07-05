@@ -1,4 +1,4 @@
-"""Seed REM with the demo storyline (Vegas, obviously).
+"""Seed REM Health with a demo patient history.
 
 Act 1 of the demo: run this, watch the graph light up.
 Run:  python backend/seed_demo.py
@@ -14,14 +14,14 @@ load_dotenv(Path(__file__).resolve().parent.parent / ".env")
 import cognee  # noqa: E402
 
 MEMORIES = [
-    "Doug is the groom. His wedding to Tracy is on Sunday at 5pm at the Bellagio chapel.",
-    "Phil, Stu, and Alan are Doug's groomsmen. They were last seen at Caesars Palace on Friday night.",
-    "Stu is a dentist. He is missing a tooth and doesn't remember how.",
-    "Alan won $82,400 counting cards at blackjack on Friday night.",
-    "There is a tiger in the bathroom of suite 2452 at Caesars Palace. It belongs to Mike Tyson.",
-    "The hotel key found in Phil's pocket is for the Best Western, not Caesars Palace.",
-    "Doug was on the roof of Caesars Palace the whole time — they moved the mattress as a prank.",
-    "The wedding rehearsal dinner is Saturday at 7pm; Tracy's father is paying.",
+    "Patient is Maya Chen, 34, diagnosed with Type 2 diabetes and mild hypertension.",
+    "Medication: Metformin 500mg, taken twice daily, started 2026-06-01 for blood sugar control.",
+    "Medication: Lisinopril 10mg, taken once daily in the morning, for blood pressure.",
+    "Allergy: penicillin causes a rash — noted by Dr. Osei at the June checkup.",
+    "Symptom reported: dizziness after taking Metformin, severity 4/10, mostly in the afternoon.",
+    "Symptom reported: mild headache, severity 3/10, resolved after drinking more water.",
+    "Appointment: follow-up with Dr. Osei on Thursday at 2pm to review blood sugar logs.",
+    "Home blood pressure reading on 2026-07-01: 128/82, slightly improved from last month.",
 ]
 
 
@@ -29,7 +29,7 @@ async def main() -> None:
     for text in MEMORIES:
         await cognee.remember(text)
         print(f"remembered: {text[:60]}…")
-    print(f"\n{len(MEMORIES)} memories stored. Ask REM: 'Where is Doug?'")
+    print(f"\n{len(MEMORIES)} memories stored. Ask REM: 'What medications is Maya on?'")
 
 
 if __name__ == "__main__":

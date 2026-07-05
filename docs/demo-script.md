@@ -5,13 +5,15 @@ Before recording: `python backend/seed_demo.py` on a FRESH memory
 (Forget everything first), backend + frontend running, close spare Chrome tabs.
 
 ## Act 0 — cold open (0:00–0:20)
-Empty graph. Line: "Every AI wakes up like this — no memory of last night.
-This is REM, and its brain is on the right. Watch."
+Empty graph. Line: "Every AI wakes up like this — no memory of last night,
+and no memory of your last appointment either. This is REM Health, and
+its brain is on the right. Watch."
 
 ## Act 1 — remember (0:20–1:10)
-- Type: "Doug is the groom. The wedding is Sunday at the Bellagio."
-- Wait for nodes to bloom. Zoom into `doug` → `person`.
-- Ask: "Where is Doug getting married?" → point at "recalled N memories".
+- Switch to the Health Log tab, log: Medication "Metformin", 500mg, twice daily.
+- Wait for nodes to bloom. Zoom into `metformin` → `medication`.
+- Switch to Chat, ask: "What medications am I currently taking?" → point at
+  "recalled N memories".
 - Rate the reply +1 → "that feedback just became a memory, chained to this
   exact answer. REM re-weights future recall around it."
 

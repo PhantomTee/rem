@@ -80,7 +80,7 @@ export default function ChatPanel({ sessionId, onMemoryChanged }: Props) {
         {messages.length === 0 && (
           <div className="mt-16 space-y-2 text-center">
             <p className="font-display text-xl italic text-ink-dim">
-              Tell me something. I&apos;ll keep it.
+              Tell me how you&apos;re feeling. I&apos;ll keep it.
             </p>
             <p className="text-xs text-ink-faint">
               Everything you say becomes part of the graph on the right.
