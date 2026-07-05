@@ -23,6 +23,13 @@ DATASET = "main_dataset"
 FEEDBACK_INFLUENCE = 0.4
 
 
+async def ensure_ready() -> None:
+    """Run schema migrations once at startup so a fresh database can serve
+    a recall() before any remember() has ever run — recall() alone doesn't
+    bootstrap the schema the way remember()'s ingestion pipeline does."""
+    await cognee.run_migrations()
+
+
 def _entry_text(entry: Any) -> str:
     for attr in ("text", "answer", "content", "context"):
         val = getattr(entry, attr, None)

@@ -54,6 +54,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
+@app.on_event("startup")
+async def _startup():
+    await memory.ensure_ready()
+
+
 _chat_client = None
 
 
