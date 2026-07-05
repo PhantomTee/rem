@@ -21,7 +21,7 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "REM Health — the health companion that sleeps on it",
+  title: "REM Health — the health companion whose memory consolidates while it sleeps",
   description:
     "A memory-first health companion. Track medications and symptoms, watch its brain form memories, consolidate them in sleep, and forget on command. Powered by cognee.",
 };

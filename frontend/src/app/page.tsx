@@ -110,7 +110,7 @@ export default function Home() {
         <div className="flex items-baseline gap-3">
           <h1 className="font-display text-2xl italic text-ink">REM Health</h1>
           <p className="hidden text-xs text-ink-dim sm:block">
-            the health companion that sleeps on it
+            memory that consolidates while it sleeps
           </p>
         </div>
         <div className="hidden lg:block">

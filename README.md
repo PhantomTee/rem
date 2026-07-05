@@ -1,4 +1,4 @@
-# REM Health — the health companion that sleeps on it
+# REM Health — the health companion whose memory consolidates while it sleeps
 
 Every AI chat demo shows *remembering*. REM shows the whole memory lifecycle — including sleep and forgetting — applied to something that actually needs it: your health history.
 

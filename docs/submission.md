@@ -5,7 +5,7 @@ Fill in the bracketed links once you have them.
 
 ## Project title
 
-REM Health — the health companion that sleeps on it
+REM Health — the health companion whose memory consolidates while it sleeps
 
 ## One-liner
 

@@ -4,7 +4,7 @@
 
 Every AI chat demo shows *remembering*. Ask people what memory means and they'll say "it doesn't forget what I told it yesterday." But that's maybe a third of what a memory actually does. Human memory consolidates while we sleep — pruning what didn't matter, strengthening what kept coming up. It sharpens when someone corrects us. And crucially, it can let go.
 
-So instead of building another chatbot-that-remembers, I built **REM Health: the health companion that sleeps on it.** Split screen: a Health Log + chat on the left, and on the right a live force-directed knowledge graph — REM's actual brain, rendered straight from cognee's graph store. Log a medication or a symptom, and it becomes nodes and edges while you watch — the same structure a doctor's mental model of your history would have, except you can actually see it.
+So instead of building another chatbot-that-remembers, I built **REM Health: the health companion whose memory consolidates while it sleeps.** Split screen: a Health Log + chat on the left, and on the right a live force-directed knowledge graph — REM's actual brain, rendered straight from cognee's graph store. Log a medication or a symptom, and it becomes nodes and edges while you watch — the same structure a doctor's mental model of your history would have, except you can actually see it.
 
 ## The lifecycle is the product
 
