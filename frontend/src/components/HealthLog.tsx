@@ -41,10 +41,17 @@ export default function HealthLog({ sessionId }: Props) {
 
   async function submit() {
     setError(null);
+    if (kind === "medication" && !name.trim()) {
+      setError("Medication name is required.");
+      return;
+    }
+    if (kind === "symptom" && !description.trim()) {
+      setError("Symptom description is required.");
+      return;
+    }
     setBusy(true);
     try {
       if (kind === "medication") {
-        if (!name.trim()) return;
         await api.logMedication(
           name.trim(),
           dosage.trim() || undefined,
@@ -55,7 +62,6 @@ export default function HealthLog({ sessionId }: Props) {
         setDosage("");
         setFrequency("");
       } else {
-        if (!description.trim()) return;
         await api.logSymptom(description.trim(), severity, sessionId);
         setDescription("");
         setSeverity(5);
@@ -158,7 +164,7 @@ export default function HealthLog({ sessionId }: Props) {
             disabled={busy}
             className="mt-3 w-full rounded-xl bg-glow px-4 py-2.5 text-sm font-medium text-[#1d1305] transition-opacity disabled:opacity-40"
           >
-            Log {kind}
+            {busy ? "Logging… (takes 15–20s)" : `Log ${kind}`}
           </button>
           {error && <p className="mt-2 text-xs text-[#c9627e]">{error}</p>}
         </div>
