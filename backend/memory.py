@@ -15,6 +15,10 @@ from typing import Any
 
 import cognee
 
+from runtime_paths import ensure_runtime_directories
+
+ensure_runtime_directories()
+
 DATASET = "main_dataset"
 FEEDBACK_INFLUENCE = 0.4
 

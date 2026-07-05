@@ -24,6 +24,9 @@ from fastapi.middleware.cors import CORSMiddleware  # noqa: E402
 from pydantic import BaseModel  # noqa: E402
 
 import memory  # noqa: E402
+from runtime_paths import ensure_runtime_directories  # noqa: E402
+
+ensure_runtime_directories()
 
 SYSTEM_PROMPT = (
     "You are REM, a memory-first health companion. You are not a doctor and must "
