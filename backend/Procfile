@@ -1,0 +1,1 @@
+web: mkdir -p /app/.rem/data /app/.rem/system/databases && uvicorn app:app --host 0.0.0.0 --port $PORT
