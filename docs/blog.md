@@ -23,14 +23,18 @@ The self-improving part is my favorite: rate any reply +1/−1 and REM stores a 
 
 **Typed entries need a session.** `remember(FeedbackEntry(...))` without a `session_id` raises `ValueError: session_id is required for typed memory entries`. Makes sense in hindsight — feedback lives in session memory before consolidation — but thread your session id through the whole stack from the start.
 
-**Groq free tier is real money's worth of extraction.** The whole build — entity extraction for every memory, summaries, the improve pipeline — ran on Groq's free `llama-3.3-70b-versatile` with cognee's built-in rate limiter (`LLM_RATE_LIMIT_ENABLED=true`, 25 req/min) and local `fastembed` embeddings. Total LLM spend: **$0**. The entire memory layer — relational, vector, and graph stores — is SQLite + LanceDB + NetworkX on disk. No Docker, no cloud, no bill.
+**Groq free tier is real money's worth of extraction.** The whole build — entity extraction for every memory, summaries, the improve pipeline — ran on Groq's free `llama-3.3-70b-versatile` with cognee's built-in rate limiter (`LLM_RATE_LIMIT_ENABLED=true`, 25 req/min) and local `fastembed` embeddings. Total LLM spend: **$0**. Day-to-day, the memory layer — relational, vector, and graph stores — is SQLite + LanceDB + NetworkX on disk, no Docker required.
+
+## Local dreams, cloud memories
+
+Self-hosted isn't the whole story. Sleep has one more biological step: what consolidation keeps, gets archived. With `COGNEE_SERVICE_URL`/`COGNEE_API_KEY` set, every Sleep cycle ends by pushing the consolidated dataset to **Cognee Cloud** via `cognee.push()`. Dreams get processed locally on cheap, disposable compute; what actually matters survives off-device. Lose the laptop, keep the brain.
 
 ## The stack
 
-Next.js 16 + react-force-graph on the front; FastAPI on the back. Every cognee call lives in one ~100-line file, `memory.py`. That's the honest pitch for a memory layer: the hard parts — extraction, graph construction, hybrid retrieval, consolidation — are cognee's, and your job is to give them a shape people can feel.
+Next.js 16 + react-force-graph on the front; FastAPI on the back, deployed on Railway. Every cognee call lives in one ~100-line file, `memory.py`. That's the honest pitch for a memory layer: the hard parts — extraction, graph construction, hybrid retrieval, consolidation — are cognee's, and your job is to give them a shape people can feel.
 
 Mine looks like something that sleeps.
 
 ---
 
-*REM was built for the WeMakeDevs × Cognee hackathon, July 2026. Code: [github.com/PhantomTee/rem](https://github.com/PhantomTee/rem)*
+*REM was built for the WeMakeDevs × Cognee hackathon, July 2026, with [Claude Code](https://claude.com/claude-code) as a pair-programmer for implementation and debugging — disclosed per the hackathon rules. Code: [github.com/PhantomTee/rem](https://github.com/PhantomTee/rem)*
